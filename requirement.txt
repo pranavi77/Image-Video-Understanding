@@ -1,0 +1,9 @@
+torch
+torchvision
+torchaudio
+transformers
+accelerate
+ffmpeg-python
+pillow
+faiss-cpu
+datasets
