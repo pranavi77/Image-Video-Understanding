@@ -1,0 +1,21 @@
+# virtual envs
+vlm312/
+vlm312_py311/
+bin/
+lib/
+include/
+share/
+etc/
+
+# data & outputs
+data/
+embeddings/
+search_results*/
+*.mp4
+*.zip
+
+# misc
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
