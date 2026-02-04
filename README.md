@@ -1,167 +1,87 @@
+```markdown
+# Vision-Language Models: Image & Video Understanding
 
+A practical implementation of vision-language models for semantic image retrieval and video question answering. This project demonstrates how modern VLMs can understand and reason about visual content through natural language.
 
-Vision-Language Project (Images & Video)
+## Overview
 
-This repository explores how modern vision-language models (VLMs) can be used to understand images and videos through natural language.
+This repository contains two core modules:
 
-The project is intentionally simple and educational. It focuses on how these models behave in practice, what they are good at, and where their limitations are, rather than trying to build a production system.
+**Image Understanding** - Implements semantic image search using vision-language embeddings. Images are encoded into a shared embedding space with text, enabling natural language queries to retrieve semantically similar images. This approach powers image search engines, visual similarity systems, and multimodal retrieval pipelines.
 
-⸻
+**Video Understanding** - Implements video question answering by sampling representative frames and processing them with a vision-language model. The system can answer natural language questions about video content, including scene description, action recognition, and event understanding.
 
-What’s in this repository
+## Features
 
-The project is organized into two independent parts.
+- CLIP-based image embedding and similarity search with FAISS
+- Frame-based video processing for efficient question answering
+- Interactive video QA interface with natural language queries
+- Semantic understanding of scenes, actions, and events
+- Clean separation between perception (embeddings) and reasoning (language models)
 
-Image understanding (src/image/)
+## Installation
 
-This module demonstrates image retrieval and similarity search.
+Create a Python 3.11 environment and install dependencies:
 
-Images are encoded into embeddings using a vision encoder. These embeddings can then be searched using text queries to retrieve semantically similar images.
+```bash
+conda create -n vlm_env python=3.11 -y
+conda activate vlm_env
+pip install --upgrade pip
+pip install torch torchvision torchaudio transformers accelerate pillow ffmpeg-python faiss-cpu datasets
+```
 
-This pattern is commonly used in:
-	•	Image search
-	•	Visual similarity systems
-	•	Retrieval-augmented generation (RAG) pipelines
+Install FFmpeg (required for video processing):
 
-In simple terms, images and text are mapped into a shared space where similar concepts end up close to each other.
+```bash
+brew install ffmpeg  # macOS
+sudo apt-get install ffmpeg  # Ubuntu/Debian
+```
 
-⸻
+## Usage
 
-Video understanding (src/video/)
+Run the video question answering demo:
 
-This module demonstrates video question answering using a video-capable vision-language model.
-
-Instead of processing every frame, the system:
-	•	Samples a small number of representative frames
-	•	Feeds those frames along with a question to the model
-	•	Generates a natural-language answer
-
-This allows the model to reason about scenes, actions, and events rather than low-level visual details.
-
-⸻
-
-What this project does well
-
-This project works best for semantic understanding, such as:
-	•	Describing what is happening in a video
-	•	Identifying actions or events
-	•	Understanding scene context
-	•	Answering high-level questions about images or videos
-
-Example questions:
-	•	What is happening in the video?
-	•	Is the vehicle slowing down or stopping?
-	•	Are pedestrians visible?
-	•	Is this a city street or a highway?
-
-⸻
-
-What this project is not meant for
-
-This project is not designed for:
-	•	Exact counting (for example, number of cars)
-	•	Precise measurements such as speed or distance
-	•	Frame-accurate or pixel-level analysis
-	•	Long videos without sampling or chunking
-
-Vision-language models operate on compressed visual representations, not raw video streams.
-They reason approximately, similar to how humans describe scenes, rather than how detectors measure them.
-
-For tasks like counting or tracking, a traditional computer vision detector is the correct tool.
-
-⸻
-
-Requirements
-
-This project was developed and tested with Python 3.11.
-
-Python dependencies:
-	•	torch
-	•	torchvision
-	•	torchaudio
-	•	transformers
-	•	accelerate
-	•	ffmpeg-python
-	•	pillow
-	•	faiss-cpu
-	•	datasets
-
-System dependency:
-	•	FFmpeg (required for video frame extraction)
-
-⸻
-
-Environment setup
-
-Create and activate a Python 3.11 environment:
-
-conda create -n vlm312_py311 python=3.11 -y
-conda activate vlm312_py311
-
-Upgrade pip:
-
-pip install –upgrade pip
-
-Install Python dependencies:
-
-pip install torch torchvision torchaudio
-pip install transformers accelerate pillow ffmpeg-python
-pip install faiss-cpu datasets
-
-Install FFmpeg on macOS:
-
-brew install ffmpeg
-
-⸻
-
-Running the video QA demo
-
+```bash
 python src/video/video_qa.py path/to/video.mp4
+```
 
-After the model loads, you can type questions at the prompt:
+Example interaction:
 
+```
 Question> what is happening in the video?
 Question> is it daytime or nighttime?
 Question> are pedestrians visible?
-exit
+Question> exit
+```
 
-⸻
+## Technical Approach
 
-Repository notes
+The project uses a two-stage architecture. The perception layer extracts semantic visual representations through vision encoders, while the reasoning layer uses language models to interpret and explain visual content. This design reflects production ML systems where specialized models extract structured information and language models provide human-interpretable explanations.
 
-To keep the repository clean and lightweight:
-	•	No datasets or videos are committed
-	•	Generated embeddings and search results are ignored
-	•	Only source code is tracked
+Image retrieval works by encoding both images and text queries into a shared embedding space where semantically similar concepts are positioned close together. Video understanding samples representative frames from the video and processes them alongside questions to generate contextual answers.
 
-Ignored artifacts include:
-	•	data/
-	•	embeddings/
-	•	search_results*/
-	•	*.mp4
-	•	*.zip
+## Strengths and Limitations
 
-⸻
+This implementation works at semantic understanding tasks including scene description, action recognition, event detection, and high-level visual reasoning. It can answer questions about what is happening in a scene, identify objects and activities, and understand context.
 
-Design philosophy
+The system is not designed for precise measurements, exact counting, pixel-level analysis, or frame-accurate detection. Vision-language models reason semantically rather than metrically. For tasks requiring precise detection, counting, or tracking, traditional computer vision models are more appropriate.
 
-The project separates:
-	•	Perception and retrieval (image embeddings)
-	•	Reasoning and explanation (vision-language models)
+## Requirements
 
-This mirrors real-world systems where specialized models extract structured information and language models explain, summarize, or reason about that information.
+- Python 3.11
+- PyTorch with torchvision and torchaudio
+- Hugging Face Transformers and Accelerate
+- FFmpeg for video frame extraction
+- FAISS for similarity search
+- PIL for image processing
 
-⸻
+## Project Structure
 
-Why this project exists
+```
+src/
+├── image/    # Image embedding and retrieval
+└── video/    # Video question answering
+```
 
-This repository exists to demonstrate practical usage of vision-language models, clearly show their strengths and limitations, and serve as a clean foundation for demos, experiments, or future extensions.
+Data files, embeddings, videos, and search results are excluded from version control to keep the repository clean and lightweight.
 
-It is a learning-first project: simple, focused, and honest about what the models can and cannot do.
-
-⸻
-
-If you want, next we can:
-	•	tighten this for a recruiter-facing repo
-	•	add a demo section with screenshots
-	•	or write a one-paragraph project summary for your resume
