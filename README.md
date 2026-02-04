@@ -88,11 +88,11 @@ Data files, embeddings, videos, and search results are excluded from version con
 
 ## Demo samples 
 
-<img width="1156" height="1280" alt="image" src="https://github.com/user-attachments/assets/e9f02570-ed42-4bd1-b9b0-fb780404a30f" />
+<img width="500" height="700" alt="image" src="https://github.com/user-attachments/assets/e9f02570-ed42-4bd1-b9b0-fb780404a30f" />
 
 This is just with dataset sample of size 500 images from BDD100K dataset
 
-<img width="1156" height="1452" alt="image" src="https://github.com/user-attachments/assets/92acbd07-f558-4ded-a7e7-11b8af922a95" />
+<img width="500" height="700" alt="image" src="https://github.com/user-attachments/assets/92acbd07-f558-4ded-a7e7-11b8af922a95" />
 
 I have uploaded a sample dashcam video from the youtube for this example
 
