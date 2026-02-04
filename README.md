@@ -58,7 +58,9 @@ Question> exit
 
 The project uses a two-stage architecture. The perception layer extracts semantic visual representations through vision encoders, while the reasoning layer uses language models to interpret and explain visual content. This design reflects production ML systems where specialized models extract structured information and language models provide human-interpretable explanations.
 
-Image retrieval works by encoding both images and text queries into a shared embedding space where semantically similar concepts are positioned close together. Video understanding samples representative frames from the video and processes them alongside questions to generate contextual answers.
+Image retrieval works by encoding both images and text queries into a shared embedding space where semantically similar concepts are positioned close together. To enable efficient search across large image collections, the system uses FAISS (Facebook AI Similarity Search) to index pre-computed image embeddings. This vector indexing allows for sub-second retrieval times even with millions of images, using approximate nearest neighbor search algorithms instead of exhaustive comparison. The index is built once during preprocessing and loaded at runtime, making queries nearly instantaneous.
+
+Video understanding samples representative frames from the video and processes them alongside questions to generate contextual answers. The temporal sampling ensures the model captures the video's progression while maintaining computational efficiency.
 
 ## Strengths and Limitations
 
